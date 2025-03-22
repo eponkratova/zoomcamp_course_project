@@ -40,7 +40,7 @@ def run_redshift_pipeline() -> None:
     pipeline = dlt.pipeline(
         pipeline_name="redshift_pipeline",
         destination="redshift",
-#        staging="filesystem",  # Data is staged in the filesystem before being loaded
+        staging="filesystem",  # Data is staged in the filesystem before being loaded
         dataset_name="transaction_details"
     )
     load_info = pipeline.run(custom_source())
