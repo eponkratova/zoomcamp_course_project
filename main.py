@@ -14,7 +14,7 @@ def load_csv_from_s3():
         aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
         region_name="us-east-2"
     )
-    bucket_name = "s3://zoomcamp-transaction/"
+    bucket_name = "zoomcamp-transaction"
     object_key = "transaction_data.csv"  
 
     response = s3.get_object(Bucket=bucket_name, Key=object_key)
