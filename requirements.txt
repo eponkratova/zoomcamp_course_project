@@ -1,1 +1,3 @@
 dlt[redshift]>=1.8.1
+fastapi[standard]
+uvicorn
