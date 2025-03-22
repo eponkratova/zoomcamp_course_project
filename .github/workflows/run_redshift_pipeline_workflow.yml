@@ -72,5 +72,10 @@ jobs:
           echo "Waiting for FastAPI to start..."
           sleep 2
         done
+
+    - name: Show FastAPI logs if failed
+      if: failure()
+      run: cat uvicorn.log
+
     - name: Run pipeline script
       run: python 'rest_api_pipeline.py'
