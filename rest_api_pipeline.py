@@ -4,6 +4,18 @@ import requests
 from dlt.common.pendulum import pendulum
 from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
 
+redshift_creds = {
+    "username": os.environ["REDSHIFT_USER"],
+    "password": os.environ["REDSHIFT_PASSWORD"],
+    "host": os.environ["REDSHIFT_HOST"],
+    "port": int(os.environ.get("REDSHIFT_PORT", 5439)),
+    "database": os.environ["REDSHIFT_DB"]
+}
+
+s3_creds ={
+    "bucket_url": os.environ["AWS_BUCKET_URL"]
+}
+
 @dlt.source(name="custom")
 def custom_source() -> Any:
     # Define the configuration for the REST API source.
@@ -39,7 +51,8 @@ def run_redshift_pipeline() -> None:
         pipeline_name="redshift_pipeline",
         destination="redshift",
 #        staging="filesystem",  # Data is staged in the filesystem before being loaded
-        dataset_name="transaction_details"
+        dataset_name="transaction_details",
+        credentials=redshift_creds
     )
     load_info = pipeline.run(custom_source())
     print("Redshift pipeline load info:", load_info)
@@ -50,7 +63,8 @@ def run_s3_pipeline() -> None:
     pipeline = dlt.pipeline(
         pipeline_name="s3_pipeline",
         destination="filesystem",
-        dataset_name="s3_transaction_details"
+        dataset_name="s3_transaction_details",
+        credentials = s3_creds
     )
     load_info = pipeline.run(custom_source())
     print("Filesystem pipeline load info:", load_info)
