@@ -1,4 +1,3 @@
-# .github/workflows/run_pipeline.yaml
 name: Run DLT Pipeline with FastAPI
 
 on:
@@ -37,4 +36,11 @@ jobs:
           sleep 10  # Give FastAPI time to start
 
       - name: Run DLT pipeline
+        env:
+          REDSHIFT_USER: ${{ secrets.REDSHIFT_USER }}
+          REDSHIFT_PASSWORD: ${{ secrets.REDSHIFT_PASSWORD }}
+          REDSHIFT_HOST: ${{ secrets.REDSHIFT_HOST }}
+          REDSHIFT_PORT: ${{ secrets.REDSHIFT_PORT }}
+          REDSHIFT_DB: ${{ secrets.REDSHIFT_DB }}
+          AWS_BUCKET_URL: ${{ secrets.AWS_BUCKET_URL }}
         run: python rest_api_pipeline.py
