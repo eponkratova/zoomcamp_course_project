@@ -37,10 +37,10 @@ jobs:
 
       - name: Run DLT pipeline
         env:
-          REDSHIFT_USER: ${{ secrets.REDSHIFT_USER }}
-          REDSHIFT_PASSWORD: ${{ secrets.REDSHIFT_PASSWORD }}
-          REDSHIFT_HOST: ${{ secrets.REDSHIFT_HOST }}
-          REDSHIFT_PORT: ${{ secrets.REDSHIFT_PORT }}
-          REDSHIFT_DB: ${{ secrets.REDSHIFT_DB }}
-          AWS_BUCKET_URL: ${{ secrets.AWS_BUCKET_URL }}
+          DLT_REDSHIFT_USERNAME: ${{ secrets.REDSHIFT_USER }}
+          DLT_REDSHIFT_PASSWORD: ${{ secrets.REDSHIFT_PASSWORD }}
+          DLT_REDSHIFT_HOST: ${{ secrets.REDSHIFT_HOST }}
+          DLT_REDSHIFT_PORT: ${{ secrets.REDSHIFT_PORT }}
+          DLT_REDSHIFT_DATABASE: ${{ secrets.REDSHIFT_DB }}
+          DLT_BUCKET_URL: ${{ secrets.AWS_BUCKET_URL }}
         run: python rest_api_pipeline.py
