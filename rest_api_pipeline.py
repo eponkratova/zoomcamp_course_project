@@ -1,22 +1,20 @@
 from typing import Any
+import os
 import dlt
 import requests
 from dlt.common.pendulum import pendulum
 from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
 
+
 @dlt.source(name="custom")
 def custom_source() -> Any:
-    # Define the configuration for the REST API source.
+    """Configurations for the pipeline"""
     config: RESTAPIConfig = {
         "client": {
-            "base_url": "https://fastapi-example-ixtk.onrender.com",  # Base URL of your FastAPI server
+            "base_url": "https://fastapi-example-ixtk.onrender.com",  #render's API
         },
         "resource_defaults": {
-            # If your data has a primary key field, you can set it here
-            # "primary_key": "id",
-            #"write_disposition": "merge",
             "endpoint": {
-                # These parameters will be appended to the URL, e.g. ?page=1&page_size=10
                 "params": {
                     "page": 1,
                     "page_size": 1000,
@@ -25,8 +23,8 @@ def custom_source() -> Any:
         },
         "resources": [
             {
-                "name": "transaction_details",   # Name of the resource (destination table name)
-                "endpoint": "transaction_details",  # Path appended to the base_url (http://127.0.0.1:8000/transaction_details)
+                "name": "transaction_details",  
+                "endpoint": "transaction_details",  
             },
         ],
     }
@@ -34,19 +32,19 @@ def custom_source() -> Any:
 
 
 def run_redshift_pipeline() -> None:
-    # Create a pipeline that loads data into Redshift.
+    """Creading the pipeline"""
     pipeline = dlt.pipeline(
         pipeline_name="redshift_pipeline",
         destination="redshift",
-#        staging="filesystem",  # Data is staged in the filesystem before being loaded
-        dataset_name="transaction_details"
+        staging="filesystem",  #dumping the data prior to storing in redshift
+        dataset_name="transaction_details_data"
     )
     load_info = pipeline.run(custom_source())
     print("Redshift pipeline load info:", load_info)
 
 
 def run_s3_pipeline() -> None:
-    # Create a pipeline that saves data to the filesystem (which can be later synced to S3 if needed).
+    """Storing data in s3"""
     pipeline = dlt.pipeline(
         pipeline_name="s3_pipeline",
         destination="filesystem",
