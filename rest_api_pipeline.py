@@ -8,9 +8,7 @@ from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
 
 @dlt.source(name="custom")
 def custom_source() -> Any:
-    """Configurations for the pipeline to retrieve 50 pages with 1000 results each"""
-    for page in range(1, 51):  
-        """Configurations for the pipeline"""
+    """Configurations for the pipeline"""
         config: RESTAPIConfig = {
             "client": {
                 "base_url": "https://fastapi-example-ixtk.onrender.com",  #render's API
