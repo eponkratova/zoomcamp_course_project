@@ -24,9 +24,9 @@ def custom_source() -> Any:
             },
             "resources": [
                 {
-                    "name": "red_transaction_details",
+                    "name": "transaction_details",
                     "endpoint": "transaction_details",
-                    "table_name": "red_transaction_details_data" 
+                    "table_name": "transaction_details" 
                 },
             ],
         }
@@ -39,7 +39,7 @@ def run_redshift_pipeline() -> None:
         pipeline_name="redshift_pipeline",
         destination="redshift",
         staging="filesystem",  #dumping the data prior to storing in redshift
-        dataset_name="red_transaction_details"
+        dataset_name="transaction_details"
     )
     load_info = pipeline.run(custom_source())
     print("Redshift pipeline load info:", load_info)
@@ -50,7 +50,7 @@ def run_s3_pipeline() -> None:
     pipeline = dlt.pipeline(
         pipeline_name="s3_pipeline",
         destination="filesystem",
-        dataset_name="s3_transaction_details"
+        dataset_name="transaction_details"
     )
     load_info = pipeline.run(custom_source())
     print("Filesystem pipeline load info:", load_info)
