@@ -24,7 +24,7 @@ def custom_source() -> Any:
             },
             "resources": [
                 {
-                    "name": "transaction_details",
+                    "name": "red_transaction_details",
                     "endpoint": "transaction_details",
                     "table_name": "red_transaction_details_data" 
                 },
