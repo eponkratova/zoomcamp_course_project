@@ -17,7 +17,7 @@ def custom_source() -> Any:
             "endpoint": {
                 "params": {
                     "page": 1,
-                    "page_size": 10,
+                    "page_size": 1000,
                 },
             },
         },
