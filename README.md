@@ -23,11 +23,11 @@ The transaction dataset used for the project was downloaded from Kaggle (https:/
 ## Table of Contents
 - [Local Environment Setup](#local-environment-setup)
 - [FastAPI Setup](#fastapi-setup)
-- [AWS S3 and AWS Redshift Setup](#storage-setup)
+- [AWS S3 and AWS Redshift Setup](#aws-s3-and-aws-redshift-setup)
 - [Configuring dlt](#configuring-dlt)
-- [Data Transformation in Redshift](#data-transformation)
-- [Deployment and Monitoring](#deployment)
-- [Visualization](#viz)
+- [Data Transformation in Redshift](#data-transformation-in-redshift)
+- [Deployment and Monitoring](#deployment-and-monitoring)
+- [Visualization](#visualization)
 
 ### Local Environment Setup
 Since the project relies on several Python libraries, you might want to set up a dedicated virtual environment using conda and install the required Python libraries.
