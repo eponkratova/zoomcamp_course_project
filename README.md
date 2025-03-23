@@ -295,6 +295,7 @@ jobs:
         if: steps.cache-virtualenv.outputs.cache-hit != "true"
       - name: Run pipeline script
         run: python "rest_api_pipeline.py"
+```
 
 And whola! The  workflow can be triggered manually or run automatically on a defined schedule.
 
