@@ -26,7 +26,7 @@ def custom_source() -> Any:
                 {
                     "name": "transaction_details",
                     "endpoint": "transaction_details",
-                    "table_name": "transaction_details_data" 
+                    "table_name": "red_transaction_details_data" 
                 },
             ],
         }
@@ -39,7 +39,7 @@ def run_redshift_pipeline() -> None:
         pipeline_name="redshift_pipeline",
         destination="redshift",
         staging="filesystem",  #dumping the data prior to storing in redshift
-        dataset_name="transaction_details"
+        dataset_name="red_transaction_details"
     )
     load_info = pipeline.run(custom_source())
     print("Redshift pipeline load info:", load_info)
