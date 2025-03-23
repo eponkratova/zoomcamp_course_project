@@ -64,18 +64,5 @@ jobs:
       if: steps.cache-virtualenv.outputs.cache-hit != 'true'
     - run: pip install -r requirements_github_action.txt
       if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-    - name: Start FastAPI app in background
-      run: |
-        nohup uvicorn main:app --host 127.0.0.1 --port 8000 > uvicorn.log 2>&1 &
-        for i in {1..10}; do
-          curl --silent http://127.0.0.1:8000/transaction_details && break
-          echo "Waiting for FastAPI to start..."
-          sleep 2
-        done
-
-    - name: Show FastAPI logs if failed
-      if: failure()
-      run: cat uvicorn.log
-
     - name: Run pipeline script
       run: python 'rest_api_pipeline.py'
