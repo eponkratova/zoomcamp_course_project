@@ -11,7 +11,7 @@ def custom_source() -> Any:
     """Configurations for the pipeline"""
     config: RESTAPIConfig = {
         "client": {
-            "base_url": "http://0.0.0.0:10000",  #render
+            "base_url": "http://127.0.0.1:10000",  #render
         },
         "resource_defaults": {
             "endpoint": {
