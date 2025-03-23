@@ -18,7 +18,8 @@ The transaction dataset used for the project was downloaded from Kaggle (https:/
 * ItemDescription, an item description
 * NumberOfItemPurchased, a total number of items Purchased
 * CostPerltem, cost per item Purchased
-* Country, a country where item purchased 
+* Country, a country where item purchased
+  
 ![dataset](assets/schema.png)
 
 
@@ -76,9 +77,11 @@ def get_data(
 Next, I launch the FastAPI server in development mode by running ```fastapi dev main.py```
 
 To test it, simply visit http://127.0.0.1:8000/{endpoint}. For example, to see the first 100 records, I entered ```http://127.0.0.1:8000/transaction_details?page=1&page_size=100```
+
 ![FastAPI locally](assets/fastapi_local.png)
 
 Apart from the simplicity of creating the API app, FastAPI also automatically generates interactive API documentation using Swagger UI and Redoc that can be accessed via http://localhost:8000/docs.
+
 ![Swagger](assets/swagger_transaction_details.png)
 
 ### AWS S3 and AWS Redshift Setup
@@ -96,16 +99,13 @@ To create a new cluster, navigate to Redshift >> Provisioned Cluster Dashboard' 
 Before I dive into the code, let me summarize the dlt framework in short.
 
 dlt (https://dlthub.com/) is an open source data integration library used to extract data from different sources, e.g. REST APIs, databases, etc. and load it into data lakes, data warehouses or send back to applications.
+
 ![dlt](assets/dlt.png)
 
 The main building blocks of the dlt framework:
-
 _@dlt.sources_ is used to define connections to data sources and pull data into your pipeline.
-
 _@dlt.resources_ is used to produce tables from the data extracted.
-
 _@dlt.transformer_ is used to define transformations to clean, normalize, or enrich your data.
-
 _pipelines_ are used to "stitch" together different steps, such as data extraction; data normalization or flattening and standardizing data structures; and loading the processed data into the destination.
 
 1. Since I planned to extract data from a REST API and load it to Redshift, I run 
@@ -221,6 +221,7 @@ FROM "zoomcamp"."transaction_details_data"."transaction_details";
 Render is a modern cloud platform that simplifies the process of deploying and scaling web applications, offering continuous deployment.
 
 The setup process is extremelly quick, providing that you added your env variables to the Render's env - which I didn't do initially, correctly specifying buckets and folders - which I didn't do, adjusting the script to load the file uploaded to S3 - which I didn't do either. Read more at https://render.com/docs/deploy-fastapi
+
 ![Render](assets/render.png)
 
 2. The dlt team already did the heavy lifting by detailing the deployment of dlt pipelines with GitHub Actions at https://dlthub.com/docs/walkthroughs/deploy-a-pipeline/deploy-with-github-actions. It's as simple as running ```dlt deploy {yourpipline}.py github-action --schedule "*/30 * * * *"```. 
@@ -308,4 +309,5 @@ And whola, your workflow can be triggered manually or run automatically on a def
 
 ### Visualization
 Now as I have the clean dataset, I was able to connect Amazon QuickSight to visualize it by specifying the Redshift cluster details. 
+
 ![QuickSight](assets/quick_sight.png)
