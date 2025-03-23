@@ -2,15 +2,9 @@
 # dlt with Redshift & FastAPI
 
 The project was prepared as a part of the Data Engineering Zoomcamp, a free nine-week course that covers the fundamentals of data engineering. 
-
-The project was prepared as a part of the Data Engineering Zoomcamp, a free nine-week course that covers the fundamentals of data engineering.
-
 * As a part of this project, transactional data was served via a FastAPI REST endpoint;
-
 * dlt, a framework for building HTTP-based service APIs in Python, was used to store the data in AWS S3—a cloud storage service from AWS—as a data lake, and in Redshift, a data warehouse service from AWS;
-
 * Transformations were applied directly in Redshift;
-
 * Clean data was visualized with Redshift QuickSight, a visualization tool from AWS.
 
 ![Architecture](assets/data_pipeline_architecture.png)
@@ -29,7 +23,6 @@ The transaction dataset used for the project was downloaded from Kaggle (https:/
 
 
 ## Table of Contents
-
 - [Local Environment Setup](#local-environment-setup)
 - [FastAPI Setup](#fastapi-setup)
 - [AWS S3 and AWS Redshift Setup](#storage-setup)
@@ -39,9 +32,7 @@ The transaction dataset used for the project was downloaded from Kaggle (https:/
 - [Visualization](#viz)
 
 ### Local Environment Setup
-
 Since the project relies on several Python libraries, I set up a dedicated virtual environment using conda and installed the required Python libraries.
-
 ```
 conda create -n datapipeline
 conda activate datapipeline
@@ -53,9 +44,7 @@ pip install "dlt[s3]"
 pip install "dlt[filesystem]
 ```
 ### FastAPI Setup
-
 To launch the FastAPI server, you would create a Python file (for example, ```main.py```) that references the dataset stored on your system. In my case, the script to retrieve data from my local environment was as follows:
-
 ```
 from fastapi import FastAPI, HTTPException, Query
 import pandas as pd
@@ -95,7 +84,6 @@ Apart from the simplicity of creating the API app, FastAPI also automatically ge
 ### AWS S3 and AWS Redshift Setup
 
 #### Redshift Setup:
-
 You can either use an existing Redshift cluster or create a new one via the AWS console - read more at https://docs.aws.amazon.com/redshift/latest/mgmt/create-cluster.html.
 
 To create a new cluster, navigate to Redshift >> Provisioned Cluster Dashboard' >> Create Cluster where you would be prompted to specify 'Cluster Identifier', 'Node Type', 'Admin User Name', 'Admin Password', 'Database Name', and other params. For simplicity, I configured the data warehouse to be publicly accessible, not recommended in the production mode.
@@ -105,7 +93,6 @@ To create a new cluster, navigate to Redshift >> Provisioned Cluster Dashboard' 
 2. Create an IAM user and attach the recommended policies, described by the dlt team at https://dlthub.com/docs/dlt-ecosystem/destinations/filesystem#aws-s3.
 
 ### Configuring dlt
-
 Before I dive into the code, let me summarize the dlt framework in short.
 
 dlt (https://dlthub.com/) is an open source data integration library used to extract data from different sources, e.g. REST APIs, databases, etc. and load it into data lakes, data warehouses or send back to applications.
@@ -206,7 +193,6 @@ if __name__ == "__main__":
     ```
 
 ### Data Transformation in Redshift
-
 Once I confirmed that the data was loaded, I created an SQL view to transform and clean the dataset. The original transaction_time column was in the format 'Wed Dec 26 09:06:00 IST 2018'. In addition, the columns for number_of_items_purchased and cost_per_item were stored as varchar, making arithmetic operations in Redshift inconvenient.
 ```
 CREATE VIEW transaction_details_cleaned AS
@@ -230,7 +216,6 @@ SELECT
 FROM "zoomcamp"."transaction_details_data"."transaction_details";
 ```
 ### Deployment and Monitoring
-
 1. To deploy my FastAPI app, I chose Render, a cloud hosting service, by uploading my main.py to another Github repositry - https://github.com/eponkratova/zoomcamp_course_project_render and creating a web service. 
 
 Render is a modern cloud platform that simplifies the process of deploying and scaling web applications, offering continuous deployment.
@@ -322,7 +307,5 @@ jobs:
 And whola, your workflow can be triggered manually or run automatically on a defined schedule.
 
 ### Visualization
-
 Now as I have the clean dataset, I was able to connect Amazon QuickSight to visualize it by specifying the Redshift cluster details. 
-
 ![QuickSight](assets/quick_sight.png)
