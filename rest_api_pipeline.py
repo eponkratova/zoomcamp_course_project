@@ -48,7 +48,7 @@ def run_s3_pipeline() -> None:
     pipeline = dlt.pipeline(
         pipeline_name="s3_pipeline",
         destination="filesystem",
-        dataset_name="dl_transaction_details"
+        dataset_name="s3_transaction_details"
     )
     load_info = pipeline.run(custom_source())
     print("Filesystem pipeline load info:", load_info)
