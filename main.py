@@ -10,8 +10,8 @@ def load_csv_from_s3():
     """The function loads CSV from S3"""
     s3 = boto3.client(
         "s3",
-        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+        aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         region_name="us-east-2"
     )
     bucket_name = "zoomcamp-transaction"
@@ -20,7 +20,6 @@ def load_csv_from_s3():
     response = s3.get_object(Bucket=bucket_name, Key=object_key)
     return pd.read_csv(io.BytesIO(response['Body'].read()))
 
-# Load once on startup
 df = load_csv_from_s3()
 df = df.where(pd.notnull(df), None)
 
