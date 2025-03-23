@@ -221,7 +221,6 @@ To view your generated.yml file, open your repository >> Actions. I did notice, 
 * AWS_SECRET_ACCESS_KEY
 * AWS_ACCESS_KEY_ID
 
-```
 name: Run redshift_pipeline pipeline from rest_api_pipeline.py
 on:
   schedule:
@@ -295,7 +294,6 @@ jobs:
       - name: Run pipeline script
         run: python "rest_api_pipeline.py"
 
-```
 
 And whola! The  workflow can be triggered manually or run automatically on a defined schedule.
 
