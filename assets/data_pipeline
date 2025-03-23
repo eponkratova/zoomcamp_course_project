@@ -1,0 +1,21 @@
+digraph "Data Pipeline" {
+	graph [dpi=300 fontcolor="#2D3436" fontname="Sans-Serif" fontsize=15 label="Data Pipeline" nodesep=1.5 overlap=false pad=2.0 rankdir=LR ranksep=2 size="30,30" splines=true]
+	node [fixedsize=true fontcolor="#2D3436" fontname="Sans-Serif" fontsize=16 height=1.4 imagescale=true labelloc=b margin="1.5,1" shape=box style=rounded width=1.4]
+	edge [color="#7B8894"]
+	"0453713c84944cd69171b8ad3e4cc3ce" [label="Raw Data (S3)" height=1.9 image="C:\Users\katep\miniconda3\envs\zoomcamp\Lib\site-packages\resources/aws/storage\simple-storage-service-s3.png" shape=none]
+	fa94c2ed37994c69a665f288b567a278 [label="FastAPI (Render)" height=1.9 image="C:\Users\katep\miniconda3\envs\zoomcamp\Lib\site-packages\resources/onprem/compute\server.png" shape=none]
+	"110df6768a5f4f5fa70983f0af55c355" [label="dlt (GitHub Actions)" height=1.9 image="C:\Users\katep\miniconda3\envs\zoomcamp\Lib\site-packages\resources/onprem/ci\github-actions.png" shape=none]
+	"977b5d779bb24b768b77de77242993b4" [label="Processed Data (S3)" height=1.9 image="C:\Users\katep\miniconda3\envs\zoomcamp\Lib\site-packages\resources/aws/storage\simple-storage-service-s3.png" shape=none]
+	"9b93000fb8df4fbbbceb72cb9b1b83f0" [label="Redshift (DWH)" height=1.9 image="C:\Users\katep\miniconda3\envs\zoomcamp\Lib\site-packages\resources/aws/database\redshift.png" shape=none]
+	subgraph "cluster_Redshift Views" {
+		graph [bgcolor="#E5F5FD" fontname="Sans-Serif" fontsize=12 label="Redshift Views" labeljust=l pencolor="#AEB6BE" rankdir=LR shape=box style=rounded]
+		"9a5ead4a9f0a4fddb306a8a4f183ef96" [label=Views height=1.9 image="C:\Users\katep\miniconda3\envs\zoomcamp\Lib\site-packages\resources/aws/database\redshift.png" shape=none]
+	}
+	"2ff3c3287aa44e16a3029671585fc704" [label="Dashboards with Looker Studio" height=1.9 image="C:\Users\katep\miniconda3\envs\zoomcamp\Lib\site-packages\resources/gcp/analytics\dataprep.png" shape=none]
+	"0453713c84944cd69171b8ad3e4cc3ce" -> fa94c2ed37994c69a665f288b567a278 [dir=forward fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13]
+	fa94c2ed37994c69a665f288b567a278 -> "110df6768a5f4f5fa70983f0af55c355" [dir=forward fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13]
+	"110df6768a5f4f5fa70983f0af55c355" -> "977b5d779bb24b768b77de77242993b4" [dir=forward fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13]
+	"110df6768a5f4f5fa70983f0af55c355" -> "9b93000fb8df4fbbbceb72cb9b1b83f0" [dir=forward fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13]
+	"9b93000fb8df4fbbbceb72cb9b1b83f0" -> "9a5ead4a9f0a4fddb306a8a4f183ef96" [dir=forward fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13]
+	"9a5ead4a9f0a4fddb306a8a4f183ef96" -> "2ff3c3287aa44e16a3029671585fc704" [dir=forward fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13]
+}
