@@ -202,6 +202,7 @@ SELECT
     _dlt_id
 FROM "zoomcamp"."transaction_details_data"."transaction_details";
 ```
+
 ### Deployment and Monitoring
 1. To deploy my FastAPI app, I chose Render, a cloud hosting service, by uploading the main.py file to another Github repositry - https://github.com/eponkratova/zoomcamp_course_project_render and creating a web service. Render is a modern cloud platform that simplifies the process of deploying and scaling web applications, offering continuous deployment. The setup process is extremelly quick, providing that you added your env variables to the Render's env - which I didn't do initially, correctly specifying buckets and folders - which I didn't do, adjusting the script to load the file uploaded to S3 - which I didn't do either. Read more at https://render.com/docs/deploy-fastapi
 
