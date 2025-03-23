@@ -24,7 +24,7 @@ def custom_source() -> Any:
         "resources": [
             {
                 "name": "transaction_details",   #redshift's table name
-                "endpoint": "transaction_details",  
+                "endpoint": "transaction_details"
             },
         ],
     }
