@@ -223,15 +223,15 @@ To view your generated.yml file, open your repository >> Actions. I did notice, 
 
 ```
 name: Run redshift_pipeline pipeline from rest_api_pipeline.py
-'on':
+on:
   schedule:
-  - cron: '*/30 * * * *'
-  workflow_dispatch: null
+    - cron: '*/30 * * * *'
+  workflow_dispatch: {}
 env:
   DESTINATION__REDSHIFT__CREDENTIALS__DATABASE: ${{ secrets.REDSHIFT_DB }}
   DESTINATION__REDSHIFT__CREDENTIALS__USERNAME: ${{ secrets.REDSHIFT_USER }}
   DESTINATION__REDSHIFT__CREDENTIALS__HOST: ${{ secrets.REDSHIFT_HOST }}
-  DESTINATION__REDSHIFT__CREDENTIALS__PORT:  ${{ secrets.REDSHIFT_PORT }}
+  DESTINATION__REDSHIFT__CREDENTIALS__PORT: ${{ secrets.REDSHIFT_PORT }}
   DESTINATION__REDSHIFT__CREDENTIALS__CONNECT_TIMEOUT: '15'
   DESTINATION__REDSHIFT__CREDENTIALS__PASSWORD: ${{ secrets.REDSHIFT_PASSWORD }}
   REDSHIFT_PIPELINE__DESTINATION__FILESYSTEM__BUCKET_URL: ${{ secrets.AWS_BUCKET_URL }}
@@ -240,12 +240,12 @@ env:
   DESTINATION__FILESYSTEM__BUCKET_URL: ${{ secrets.AWS_BUCKET_URL }}
   DESTINATION__BUCKET_URL: ${{ secrets.AWS_BUCKET_URL }}
   BUCKET_URL: ${{ secrets.AWS_BUCKET_URL }}
-REDSHIFT_PIPELINE__DESTINATION__CREDENTIALS__AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  REDSHIFT_PIPELINE__DESTINATION__CREDENTIALS__AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   REDSHIFT_PIPELINE__CREDENTIALS__AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   DESTINATION__FILESYSTEM__CREDENTIALS__AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   DESTINATION__CREDENTIALS__AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   CREDENTIALS__AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-REDSHIFT_PIPELINE__DESTINATION__FILESYSTEM__CREDENTIALS__AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  REDSHIFT_PIPELINE__DESTINATION__FILESYSTEM__CREDENTIALS__AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   REDSHIFT_PIPELINE__DESTINATION__CREDENTIALS__AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   REDSHIFT_PIPELINE__CREDENTIALS__AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   DESTINATION__FILESYSTEM__CREDENTIALS__AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -260,35 +260,38 @@ jobs:
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
-    - id: skip_check
-      uses: fkirc/skip-duplicate-actions@v5
-      with:
-        concurrent_skipping: always
-        skip_after_successful_duplicate: 'false'
-        do_not_skip: '[]'
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          concurrent_skipping: always
+          skip_after_successful_duplicate: 'false'
+          do_not_skip: '[]'
   run_pipeline:
     needs: maybe_skip
     if: needs.maybe_skip.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     steps:
-    - name: Check out
-      uses: actions/checkout@v3
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.10.x
-    - uses: syphar/restore-virtualenv@v1
-      id: cache-virtualenv
-      with:
-        requirement_files: requirements_github_action.txt
-    - uses: syphar/restore-pip-download-cache@v1
-      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-    - run: pip install -r requirements_github_action.txt
-      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-    - name: Run pipeline script
-      run: python 'rest_api_pipeline.py'
+      - name: Check out
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.x
+      - name: Restore virtualenv
+        uses: syphar/restore-virtualenv@v1
+        id: cache-virtualenv
+        with:
+          requirement_files: requirements_github_action.txt
+      - name: Restore pip download cache
+        uses: syphar/restore-pip-download-cache@v1
+        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+      - name: Install dependencies
+        run: pip install -r requirements_github_action.txt
+        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+      - name: Run pipeline script
+        run: python 'rest_api_pipeline.py'
 
-      ```
+```
 And whola! The  workflow can be triggered manually or run automatically on a defined schedule.
 
 ### Visualization
