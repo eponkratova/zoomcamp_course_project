@@ -9,7 +9,7 @@ The project was prepared as a part of the Data Engineering Zoomcamp, a free nine
 
 ![Architecture](assets/data_pipeline_architecture.png)
 
-The transaction dataset used for the project was downloaded from Kaggle (https://www.kaggle.com/datasets/vipin20/transaction-data) and stored in AWS S3, with FastAPI reading from the bucket. The schema of the dataset is as follows:
+The transaction dataset used for the project was downloaded from [Kaggle]([http://example.com](https://www.kaggle.com/datasets/vipin20/transaction-data) and stored in AWS S3, with FastAPI reading from the bucket. The schema of the dataset is as follows:
 
 * UserId, a unique ID for all User Id
 * TransactionId, a unique Transactions ID
@@ -71,21 +71,21 @@ def get_data(
         "data": page_data
     }
 ```
-To launch the FastAPI server in the development mode, run ```fastapi dev main.py```, and then, visit http://127.0.0.1:8000/{endpoint} to test the server. For example, to see the first 100 records, I entered ```http://127.0.0.1:8000/transaction_details?page=1&page_size=100```. The best part in FastAPI, though, is that FastAPI also automatically generates interactive API documentation using Swagger UI and Redoc that can be accessed via http://localhost:8000/docs.
+To launch the FastAPI server in the development mode, run ```fastapi dev main.py```, and then, visit [Server]([http://example.com](http://127.0.0.1:8000/{endpoint}) for testing. For example, to see the first 100 records, I entered [test link]([http://example.com](http://127.0.0.1:8000/transaction_details?page=1&page_size=100). The best part in FastAPI, though, is that FastAPI also automatically generates interactive API documentation using Swagger UI and Redoc that can be accessed via [documentation]([http://example.com](http://localhost:8000/docs)).
 
 ![Swagger](assets/swagger_transaction_details.png)
 
 ### AWS S3 and AWS Redshift Setup
 
 #### Redshift Setup:
-You can either use an existing Redshift cluster or create a new one via the AWS console - read more at https://docs.aws.amazon.com/redshift/latest/mgmt/create-cluster.html. Let's assume that you are creating the cluster from scratch. Navigate to Redshift >> Provisioned Cluster Dashboard' >> Create Cluster where you would be prompted to specify 'Cluster Identifier', 'Node Type', 'Admin User Name', 'Admin Password', 'Database Name', and other params. For simplicity, I configured the data warehouse to be publicly accessible, not recommended in the production mode.
+You can either use an existing Redshift cluster or create a new one via the AWS console - read more at [aws site]([http://example.com](https://docs.aws.amazon.com/redshift/latest/mgmt/create-cluster.html). Let's assume that you are creating the cluster from scratch. Navigate to Redshift >> Provisioned Cluster Dashboard' >> Create Cluster where you would be prompted to specify 'Cluster Identifier', 'Node Type', 'Admin User Name', 'Admin Password', 'Database Name', and other params. For simplicity, I configured the data warehouse to be publicly accessible, not recommended in the production mode.
 
 #### S3 Setup
-1. You can follow the AWS documentation at https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html to create a new bucket (or use an existing one) to be later used as a staging area.
-2. Create an IAM user and attach the recommended policies, described by the dlt team at https://dlthub.com/docs/dlt-ecosystem/destinations/filesystem#aws-s3.
+1. You can follow the AWS documentation at [aws site]([http://example.com](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) to create a new bucket (or use an existing one) to be later used as a staging area.
+2. Create an IAM user and attach the recommended policies, described by the dlt team at [dlt site]([http://example.com]([https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html](https://dlthub.com/docs/dlt-ecosystem/destinations/filesystem#aws-s3)).
 
 ### Configuring dlt
-Before I dive into the code, let me summarize the dlt framework. dlt (https://dlthub.com/) is an open source data integration library used to extract data from different sources, e.g. REST APIs, databases, etc. and load it into data lakes, data warehouses or send back to applications.
+Before I dive into the code, let me summarize the dlt framework. [dlt]([http://example.com](https://dlthub.com/)) is an open source data integration library used to extract data from different sources, e.g. REST APIs, databases, etc. and load it into data lakes, data warehouses or send back to applications.
 
 ![dlt](assets/dlt.png)
 
@@ -99,7 +99,7 @@ _@dlt.transformer_ is used to define transformations to clean, normalize, or enr
 
 _pipelines_ are used to "stitch" together different steps, such as data extraction; data normalization or flattening and standardizing data structures; and loading the processed data into the destination.
 
-1. Since I planned to extract data from a REST API and load it to Redshift, I run ```dlt init rest_api redshift``` to initialize a new project and generate a templated script, serving as the foundation for building a dlt pipeline. Read more at https://dlthub.com/docs/tutorial/rest-api.
+1. Since I planned to extract data from a REST API and load it to Redshift, I run ```dlt init rest_api redshift``` to initialize a new project and generate a templated script, serving as the foundation for building a dlt pipeline. Read more at [dlt site]([https://dlthub.com/](https://dlthub.com/docs/tutorial/rest-api).
 
 2. During the previous stage, I set up AWS credentials to connect to the S3 bucket and added them to a ```.dlt/secrets.toml``` file - the file is excluded from version control:
 
@@ -206,11 +206,11 @@ FROM "zoomcamp"."transaction_details_data"."transaction_details";
 ```
 
 ### Deployment and Monitoring
-1. To deploy my FastAPI app, I chose Render, a cloud hosting service, by uploading the main.py file to another Github repositry - https://github.com/eponkratova/zoomcamp_course_project_render and creating a web service. Render is a modern cloud platform that simplifies the process of deploying and scaling web applications, offering continuous deployment. The setup process is extremelly quick, providing that you added your env variables to the Render's env - which I didn't do initially, correctly specifying buckets and folders - which I didn't do, adjusting the script to load the file uploaded to S3 - which I didn't do either. Read more at https://render.com/docs/deploy-fastapi
+1. To deploy my FastAPI app, I chose Render, a cloud hosting service, by uploading the main.py file to another Github repositry - [github](https://github.com/eponkratova/zoomcamp_course_project_render) and creating a web service. Render is a modern cloud platform that simplifies the process of deploying and scaling web applications, offering continuous deployment. The setup process is extremelly quick, providing that you added your env variables to the Render's env - which I didn't do initially, correctly specifying buckets and folders - which I didn't do, adjusting the script to load the file uploaded to S3 - which I didn't do either. Read more at [render](https://render.com/docs/deploy-fastapi).
 
 ![Render](assets/render.png)
 
-2. The dlt team already did the heavy lifting by detailing the deployment of dlt pipelines with GitHub Actions at https://dlthub.com/docs/walkthroughs/deploy-a-pipeline/deploy-with-github-actions. It's as simple as running ```dlt deploy {yourpipline}.py github-action --schedule "*/30 * * * *"```. 
+2. The dlt team already did the heavy lifting by detailing the deployment of dlt pipelines with GitHub Actions at [github](https://dlthub.com/docs/walkthroughs/deploy-a-pipeline/deploy-with-github-actions). It's as simple as running ```dlt deploy {yourpipline}.py github-action --schedule "*/30 * * * *"```. 
 
 To view your generated.yml file, open your repository >> Actions. I did notice, however, that the environment variables were not created automatically, so I added the following secrets manually by going to GitHub repo >> Settings >> Secrets:
 
