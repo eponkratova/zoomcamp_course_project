@@ -103,9 +103,13 @@ dlt (https://dlthub.com/) is an open source data integration library used to ext
 ![dlt](assets/dlt.png)
 
 The main building blocks of the dlt framework:
+
 _@dlt.sources_ is used to define connections to data sources and pull data into your pipeline.
+
 _@dlt.resources_ is used to produce tables from the data extracted.
+
 _@dlt.transformer_ is used to define transformations to clean, normalize, or enrich your data.
+
 _pipelines_ are used to "stitch" together different steps, such as data extraction; data normalization or flattening and standardizing data structures; and loading the processed data into the destination.
 
 1. Since I planned to extract data from a REST API and load it to Redshift, I run 
