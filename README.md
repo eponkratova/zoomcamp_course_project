@@ -82,7 +82,7 @@ You can either use an existing Redshift cluster or create a new one via the AWS 
 
 #### S3 Setup
 1. You can follow the AWS documentation at [aws site](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) to create a new bucket (or use an existing one) to be later used as a staging area.
-2. Create an IAM user and attach the recommended policies, described by the dlt team at [dlt site]([https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html](https://dlthub.com/docs/dlt-ecosystem/destinations/filesystem#aws-s3).
+2. Create an IAM user and attach the recommended policies, described by the dlt team at [dlt site](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html](https://dlthub.com/docs/dlt-ecosystem/destinations/filesystem#aws-s3).
 
 ### Configuring dlt
 Before I dive into the code, let me summarize the dlt framework. [dlt](https://dlthub.com/) is an open source data integration library used to extract data from different sources, e.g. REST APIs, databases, etc. and load it into data lakes, data warehouses or send back to applications.
