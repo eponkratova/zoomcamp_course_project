@@ -102,7 +102,8 @@ _pipelines_ are used to "stitch" together different steps, such as data extracti
 1. Since I planned to extract data from a REST API and load it to Redshift, I run ```dlt init rest_api redshift``` to initialize a new project and generate a templated script, serving as the foundation for building a dlt pipeline. Read more at https://dlthub.com/docs/tutorial/rest-api.
 
 2. During the previous stage, I set up AWS credentials to connect to the S3 bucket and added them to a ```.dlt/secrets.toml``` file - the file is excluded from version control:
-```
+
+```toml
 [destination.redshift.credentials]
 database = "your_database_name"
 password = "your_redshift_password"
