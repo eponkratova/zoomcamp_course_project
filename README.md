@@ -71,7 +71,7 @@ def get_data(
         "data": page_data
     }
 ```
-To launch the FastAPI server in the development mode, run ```fastapi dev main.py```, and then, visit [Server]([http://example.com](http://127.0.0.1:8000/{endpoint}) for testing. For example, to see the first 100 records, I entered [test link](http://127.0.0.1:8000/transaction_details?page=1&page_size=100). The best part in FastAPI, though, is that FastAPI also automatically generates interactive API documentation using Swagger UI and Redoc that can be accessed via [documentation](http://localhost:8000/docs).
+To launch the FastAPI server in the development mode, run ```fastapi dev main.py```, and then, visit [Server](http://127.0.0.1:8000/{endpoint}) for testing. For example, to see the first 100 records, I entered [test link](http://127.0.0.1:8000/transaction_details?page=1&page_size=100). The best part in FastAPI, though, is that FastAPI also automatically generates interactive API documentation using Swagger UI and Redoc that can be accessed via [documentation](http://localhost:8000/docs).
 
 ![Swagger](assets/swagger_transaction_details.png)
 
