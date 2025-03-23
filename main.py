@@ -7,7 +7,7 @@ import os
 app = FastAPI()
 
 def load_csv_from_s3():
-    """The function loads CSV from S3"""
+    """Load CSV from S3"""
     s3 = boto3.client(
         "s3",
         aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
@@ -15,11 +15,12 @@ def load_csv_from_s3():
         region_name="us-east-2"
     )
     bucket_name = "zoomcamp-transaction"
-    object_key = "transaction_data.csv"  
+    object_key = "raw_data/transaction_data.csv"  
 
     response = s3.get_object(Bucket=bucket_name, Key=object_key)
     return pd.read_csv(io.BytesIO(response['Body'].read()))
 
+# Load data once at startup and replace NaN with None
 df = load_csv_from_s3()
 df = df.where(pd.notnull(df), None)
 
@@ -30,4 +31,18 @@ def get_data(
 ):
     total = len(df)
     start = (page - 1) * page_size
-    end = start + page
+    end = start + page_size
+
+    # If the starting index is beyond the available data, return 404
+    if start >= total:
+        raise HTTPException(status_code=404, detail="Page not found")
+
+    # Slice the dataframe and convert to a list of records
+    data = df.iloc[start:end].to_dict(orient="records")
+
+    return {
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "data": data
+    }

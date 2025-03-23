@@ -8,27 +8,29 @@ from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
 
 @dlt.source(name="custom")
 def custom_source() -> Any:
-    """Configurations for the pipeline"""
-    config: RESTAPIConfig = {
-        "client": {
-            "base_url": "https://fastapi-example-ixtk.onrender.com",  #render
-        },
-        "resource_defaults": {
-            "endpoint": {
-                "params": {
-                    "page": 1,
-                    "page_size": 10,
+    """Configurations for the pipeline to retrieve 50 pages with 1000 results each"""
+    for page in range(1, 51):  
+        config: RESTAPIConfig = {
+            "client": {
+                "base_url": "https://fastapi-example-ixtk.onrender.com",
+            },
+            "resource_defaults": {
+                "endpoint": {
+                    "params": {
+                        "page": page,
+                        "page_size": 1000,
+                    },
                 },
             },
-        },
-        "resources": [
-            {
-                "name": "transaction_details",   #redshift's table name
-                "endpoint": "transaction_details",  
-            },
-        ],
-    }
-    yield from rest_api_resources(config)
+            "resources": [
+                {
+                    "name": "transaction_details",
+                    "endpoint": "transaction_details",
+                    "table_name": "transaction_details_data" 
+                },
+            ],
+        }
+        yield from rest_api_resources(config)
 
 
 def run_redshift_pipeline() -> None:
