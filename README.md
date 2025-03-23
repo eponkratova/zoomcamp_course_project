@@ -177,10 +177,11 @@ def run_s3_pipeline() -> None:
 if __name__ == "__main__":
     run_redshift_pipeline()
     run_s3_pipeline()
-    ```
+```
 
 ### Data Transformation in Redshift
 Once I confirmed that the data was loaded, I created an SQL view to transform and clean the dataset. The original transaction_time column was in the format 'Wed Dec 26 09:06:00 IST 2018'. In addition, the columns for number_of_items_purchased and cost_per_item were stored as varchar, making arithmetic operations in Redshift inconvenient.
+
 ```
 CREATE VIEW transaction_details_cleaned AS
 SELECT 
@@ -295,6 +296,7 @@ jobs:
         run: python "rest_api_pipeline.py"
 
 
+```
 And whola! The  workflow can be triggered manually or run automatically on a defined schedule.
 
 ### Visualization
