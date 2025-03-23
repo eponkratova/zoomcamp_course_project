@@ -9,7 +9,7 @@ The project was prepared as a part of the Data Engineering Zoomcamp, a free nine
 
 ![Architecture](assets/data_pipeline_architecture.png)
 
-The transaction dataset used for the project was downloaded from [Kaggle]([http://example.com](https://www.kaggle.com/datasets/vipin20/transaction-data) and stored in AWS S3, with FastAPI reading from the bucket. The schema of the dataset is as follows:
+The transaction dataset used for the project was downloaded from [Kaggle](https://www.kaggle.com/datasets/vipin20/transaction-data) and stored in AWS S3, with FastAPI reading from the bucket. The schema of the dataset is as follows:
 
 * UserId, a unique ID for all User Id
 * TransactionId, a unique Transactions ID
@@ -71,21 +71,21 @@ def get_data(
         "data": page_data
     }
 ```
-To launch the FastAPI server in the development mode, run ```fastapi dev main.py```, and then, visit [Server]([http://example.com](http://127.0.0.1:8000/{endpoint}) for testing. For example, to see the first 100 records, I entered [test link]([http://example.com](http://127.0.0.1:8000/transaction_details?page=1&page_size=100). The best part in FastAPI, though, is that FastAPI also automatically generates interactive API documentation using Swagger UI and Redoc that can be accessed via [documentation]([http://example.com](http://localhost:8000/docs)).
+To launch the FastAPI server in the development mode, run ```fastapi dev main.py```, and then, visit [Server]([http://example.com](http://127.0.0.1:8000/{endpoint}) for testing. For example, to see the first 100 records, I entered [test link](http://127.0.0.1:8000/transaction_details?page=1&page_size=100). The best part in FastAPI, though, is that FastAPI also automatically generates interactive API documentation using Swagger UI and Redoc that can be accessed via [documentation](http://localhost:8000/docs).
 
 ![Swagger](assets/swagger_transaction_details.png)
 
 ### AWS S3 and AWS Redshift Setup
 
 #### Redshift Setup:
-You can either use an existing Redshift cluster or create a new one via the AWS console - read more at [aws site]([http://example.com](https://docs.aws.amazon.com/redshift/latest/mgmt/create-cluster.html). Let's assume that you are creating the cluster from scratch. Navigate to Redshift >> Provisioned Cluster Dashboard' >> Create Cluster where you would be prompted to specify 'Cluster Identifier', 'Node Type', 'Admin User Name', 'Admin Password', 'Database Name', and other params. For simplicity, I configured the data warehouse to be publicly accessible, not recommended in the production mode.
+You can either use an existing Redshift cluster or create a new one via the AWS console - read more at [aws site](https://docs.aws.amazon.com/redshift/latest/mgmt/create-cluster.html). Let's assume that you are creating the cluster from scratch. Navigate to Redshift >> Provisioned Cluster Dashboard' >> Create Cluster where you would be prompted to specify 'Cluster Identifier', 'Node Type', 'Admin User Name', 'Admin Password', 'Database Name', and other params. For simplicity, I configured the data warehouse to be publicly accessible, not recommended in the production mode.
 
 #### S3 Setup
-1. You can follow the AWS documentation at [aws site]([http://example.com](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) to create a new bucket (or use an existing one) to be later used as a staging area.
-2. Create an IAM user and attach the recommended policies, described by the dlt team at [dlt site]([http://example.com]([https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html](https://dlthub.com/docs/dlt-ecosystem/destinations/filesystem#aws-s3)).
+1. You can follow the AWS documentation at [aws site](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) to create a new bucket (or use an existing one) to be later used as a staging area.
+2. Create an IAM user and attach the recommended policies, described by the dlt team at [dlt site]([https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html](https://dlthub.com/docs/dlt-ecosystem/destinations/filesystem#aws-s3).
 
 ### Configuring dlt
-Before I dive into the code, let me summarize the dlt framework. [dlt]([http://example.com](https://dlthub.com/)) is an open source data integration library used to extract data from different sources, e.g. REST APIs, databases, etc. and load it into data lakes, data warehouses or send back to applications.
+Before I dive into the code, let me summarize the dlt framework. [dlt](https://dlthub.com/) is an open source data integration library used to extract data from different sources, e.g. REST APIs, databases, etc. and load it into data lakes, data warehouses or send back to applications.
 
 ![dlt](assets/dlt.png)
 
@@ -99,7 +99,7 @@ _@dlt.transformer_ is used to define transformations to clean, normalize, or enr
 
 _pipelines_ are used to "stitch" together different steps, such as data extraction; data normalization or flattening and standardizing data structures; and loading the processed data into the destination.
 
-1. Since I planned to extract data from a REST API and load it to Redshift, I run ```dlt init rest_api redshift``` to initialize a new project and generate a templated script, serving as the foundation for building a dlt pipeline. Read more at [dlt site]([https://dlthub.com/](https://dlthub.com/docs/tutorial/rest-api).
+1. Since I planned to extract data from a REST API and load it to Redshift, I run ```dlt init rest_api redshift``` to initialize a new project and generate a templated script, serving as the foundation for building a dlt pipeline. Read more at [dlt site](https://dlthub.com/docs/tutorial/rest-api).
 
 2. During the previous stage, I set up AWS credentials to connect to the S3 bucket and added them to a ```.dlt/secrets.toml``` file - the file is excluded from version control:
 
